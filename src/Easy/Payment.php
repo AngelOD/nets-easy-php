@@ -101,6 +101,21 @@ class Payment extends EasyType
       ->post('charges/' . $chargeId . '/refunds', (object) $options);
   }
 
+  /**
+   * @return bool
+   */
+  public function terminate()
+  {
+    try {
+      Easy::client()
+        ->put('payments/' . $this->paymentId . '/terminate', (object) []);
+    } catch (BadRequestException $e) {
+      return false;
+    }
+
+    return true;
+  }
+
   public static function retrieve($id)
   {
     try {
