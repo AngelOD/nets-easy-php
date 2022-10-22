@@ -14,12 +14,13 @@ use Nets\Easy\Exceptions\PaymentException;
 /**
  * @property-read string $paymentId
  * @property-read mixed $summary
- * @property-read Consumber $consumer
+ * @property-read Consumer $consumer
  * @property-read PaymentDetails $paymentDetails
  * @property-read OrderDetails $orderDetails
  * @property-read Checkout $checkout
  * @property-read Carbon $created
  * @property-read Subscription $subscription
+ * @property-read Summary $summary
  */
 class Payment extends EasyType
 {
@@ -56,6 +57,11 @@ class Payment extends EasyType
     if ($subscription && isset($subscription['id'])) {
       return Subscription::retrieve($subscription['id']);
     }
+  }
+
+  public function getSummaryAttribute($summary)
+  {
+    return new Summary($summary);
   }
 
   /**
